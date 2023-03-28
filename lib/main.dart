@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player/screens/BaseScreen.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  var box = await Hive.openBox('Fave');
   runApp(const MyApp());
 }
 

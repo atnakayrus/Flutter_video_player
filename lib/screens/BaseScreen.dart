@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/screens/FileScreen.dart';
 import 'package:video_player/screens/WebScreen.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+import '../hives/hivefn.dart';
 import 'FavScreen.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -19,13 +21,27 @@ class _BaseScreenState extends State<BaseScreen> {
     });
   }
 
+  final _myBox = Hive.box('Fave');
+  DataBase db = DataBase();
+  @override
+  void initState() {
+    if (_myBox.get('Fave') == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
   Widget currentScreen() {
     if (_selectedIndex == 1) {
-      return FileScreen();
+      return FileScreen(db: db);
     } else if (_selectedIndex == 2) {
       return WebScreen();
     }
-    return FavScreen();
+    return FavScreen(
+      db: db,
+    );
   }
 
   @override
