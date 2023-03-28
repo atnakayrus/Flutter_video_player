@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import "package:file_manager/file_manager.dart";
+import 'package:video_player/widgets/filetile.dart';
 
 class FileScreen extends StatefulWidget {
   const FileScreen({super.key});
@@ -34,22 +35,8 @@ class _FileScreenState extends State<FileScreen> {
             return ListView.builder(
               itemCount: entities.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: FileManager.isFile(entities[index])
-                        ? Icon(Icons.feed_outlined)
-                        : Icon(Icons.folder),
-                    title: Text(FileManager.basename(entities[index])),
-                    onTap: () {
-                      if (FileManager.isDirectory(entities[index])) {
-                        controller
-                            .openDirectory(entities[index]); // open directory
-                      } else {
-                        // Perform file-related tasks.
-                      }
-                    },
-                  ),
-                );
+                return FileTile(
+                    entity: entities[index], controller: controller);
               },
             );
           },
