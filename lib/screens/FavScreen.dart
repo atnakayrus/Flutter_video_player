@@ -10,9 +10,15 @@ class FavScreen extends StatefulWidget {
 class _FavScreenState extends State<FavScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: const Text('hello'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('hello'),
+      ),
+      drawer: Drawer(backgroundColor: Colors.blue),
+      body: Container(
+        color: Colors.red,
+        child: const Text('hello'),
+      ),
     );
   }
 }

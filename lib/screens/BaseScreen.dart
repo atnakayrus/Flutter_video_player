@@ -12,27 +12,28 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  int _selectedIndex=0;
-  void SelectedItem(int index){
+  int _selectedIndex = 0;
+  void SelectedItem(int index) {
     setState(() {
-      _selectedIndex=index;
+      _selectedIndex = index;
     });
   }
-  Widget currentScreen(){
-    if(_selectedIndex==1){
+
+  Widget currentScreen() {
+    if (_selectedIndex == 1) {
       return FileScreen();
-    }
-    else if(_selectedIndex==2){
+    } else if (_selectedIndex == 2) {
       return WebScreen();
     }
     return FavScreen();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('hello'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('hello'),
+      // ),
       body: currentScreen(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
