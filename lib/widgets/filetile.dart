@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/constants/Appstyle.dart';
 import 'package:video_player/hives/datafn.dart';
 import 'package:video_player/hives/hivefn.dart';
 
@@ -40,7 +41,7 @@ class _FileTileState extends State<FileTile> {
     bool check = df.isFav(widget.entity, widget.db.folders);
     IconButton fav = IconButton(
       icon: Icon(check ? Icons.favorite : Icons.favorite_border,
-          color: Colors.red),
+          color: AppStyle.subAccentColor),
       onPressed: () {
         if (check) {
           widget.db.folders.remove(widget.entity);
@@ -57,6 +58,8 @@ class _FileTileState extends State<FileTile> {
     );
 
     return ListTile(
+      textColor: AppStyle.subAccentColor,
+      iconColor: AppStyle.subAccentColor,
       leading: Icon(ic),
       title: Text(FileManager.basename(widget.entity)),
       trailing: fav,

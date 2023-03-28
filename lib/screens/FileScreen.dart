@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import "package:file_manager/file_manager.dart";
+import 'package:video_player/constants/Appstyle.dart';
 import 'package:video_player/hives/hivefn.dart';
 import 'package:video_player/widgets/filetile.dart';
 
@@ -19,8 +20,10 @@ class _FileScreenState extends State<FileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppStyle.mainColor,
+        foregroundColor: AppStyle.subMainColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             if (controller.isRootDirectory() != true) {
               controller.goToParentDirectory();
@@ -29,7 +32,7 @@ class _FileScreenState extends State<FileScreen> {
         ),
       ),
       body: Container(
-        color: Colors.yellow,
+        color: AppStyle.accentColor,
         child: FileManager(
           controller: controller,
           builder: (context, snapshot) {

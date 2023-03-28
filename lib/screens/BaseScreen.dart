@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/constants/Appstyle.dart';
 import 'package:video_player/screens/FileScreen.dart';
 import 'package:video_player/screens/WebScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,7 +16,7 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 0;
-  void SelectedItem(int index) {
+  void selectedItem(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -47,27 +48,34 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('hello'),
-      // ),
       body: currentScreen(),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        backgroundColor: AppStyle.mainColor,
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(
+              Icons.star,
+              color: AppStyle.subAccentColor,
+            ),
             label: 'Favs',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(
+              Icons.star,
+              color: AppStyle.subAccentColor,
+            ),
             label: 'Files',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(
+              Icons.star,
+              color: AppStyle.subAccentColor,
+            ),
             label: 'web',
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: SelectedItem,
+        onTap: selectedItem,
       ),
     );
   }
