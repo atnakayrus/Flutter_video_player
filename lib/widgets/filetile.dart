@@ -22,15 +22,19 @@ class FileTile extends StatefulWidget {
 }
 
 class _FileTileState extends State<FileTile> {
+
   @override
   Widget build(BuildContext context) {
-    IconData ic;
+    var ic;
     if (FileManager.isDirectory(widget.entity)) {
       ic = Icons.folder;
     } else {
       String ext = FileManager.getFileExtension(widget.entity);
       if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-        ic = Icons.image;
+        String path=widget.entity.path;
+        print(path);
+        File f=File(path);
+        ic = Container(padding:EdgeInsets.all(10),child: Image.file(f));
       } else if (ext == "mp4") {
         ic = Icons.video_collection;
       } else {
@@ -60,7 +64,7 @@ class _FileTileState extends State<FileTile> {
     return ListTile(
       textColor: AppStyle.subAccentColor,
       iconColor: AppStyle.subAccentColor,
-      leading: Icon(ic),
+      leading: (ic.runtimeType==IconData)?Icon(ic):ic,
       title: Text(FileManager.basename(widget.entity)),
       trailing: fav,
       onTap: () {

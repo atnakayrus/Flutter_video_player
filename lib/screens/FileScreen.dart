@@ -43,7 +43,8 @@ class _FileScreenState extends State<FileScreen> {
                 return FileTile(
                     entity: entities[index],
                     controller: controller,
-                    db: widget.db);
+                    db: widget.db
+                );
               },
             );
           },
