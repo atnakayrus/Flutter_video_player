@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/constants/Appstyle.dart';
-import 'package:video_player/screens/FileScreen.dart';
-import 'package:video_player/screens/WebScreen.dart';
+import 'package:flutter_video_player/constants/Appstyle.dart';
+import 'package:flutter_video_player/screens/FileScreen.dart';
+import 'package:flutter_video_player/screens/WebScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../hives/hivefn.dart';

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import "package:file_manager/file_manager.dart";
-import 'package:video_player/constants/Appstyle.dart';
-import 'package:video_player/hives/hivefn.dart';
-import 'package:video_player/widgets/filetile.dart';
+import 'package:flutter_video_player/constants/Appstyle.dart';
+import 'package:flutter_video_player/hives/hivefn.dart';
+import 'package:flutter_video_player/widgets/filetile.dart';
 
 class FileScreen extends StatefulWidget {
   final DataBase db;
@@ -43,8 +43,7 @@ class _FileScreenState extends State<FileScreen> {
                 return FileTile(
                     entity: entities[index],
                     controller: controller,
-                    db: widget.db
-                );
+                    db: widget.db);
               },
             );
           },

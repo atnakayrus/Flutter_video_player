@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/constants/Appstyle.dart';
-import 'package:video_player/hives/hivefn.dart';
-import 'package:video_player/widgets/filetile.dart';
+import 'package:flutter_video_player/constants/Appstyle.dart';
+import 'package:flutter_video_player/hives/hivefn.dart';
+import 'package:flutter_video_player/widgets/filetile.dart';
 
 class FavScreen extends StatefulWidget {
   final DataBase db;

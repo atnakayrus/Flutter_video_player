@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/constants/Appstyle.dart';
+import 'package:flutter_video_player/constants/Appstyle.dart';
 
 class WebScreen extends StatefulWidget {
   const WebScreen({super.key});

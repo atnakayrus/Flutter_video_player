@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/constants/Appstyle.dart';
-import 'package:video_player/hives/datafn.dart';
-import 'package:video_player/hives/hivefn.dart';
+import 'package:flutter_video_player/constants/Appstyle.dart';
+import 'package:flutter_video_player/hives/datafn.dart';
+import 'package:flutter_video_player/hives/hivefn.dart';
 
 class FileTile extends StatefulWidget {
   final FileSystemEntity entity;
@@ -22,7 +22,6 @@ class FileTile extends StatefulWidget {
 }
 
 class _FileTileState extends State<FileTile> {
-
   @override
   Widget build(BuildContext context) {
     var ic;
@@ -31,10 +30,10 @@ class _FileTileState extends State<FileTile> {
     } else {
       String ext = FileManager.getFileExtension(widget.entity);
       if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-        String path=widget.entity.path;
+        String path = widget.entity.path;
         print(path);
-        File f=File(path);
-        ic = Container(padding:EdgeInsets.all(10),child: Image.file(f));
+        File f = File(path);
+        ic = Container(padding: EdgeInsets.all(10), child: Image.file(f));
       } else if (ext == "mp4") {
         ic = Icons.video_collection;
       } else {
@@ -66,7 +65,7 @@ class _FileTileState extends State<FileTile> {
     return ListTile(
       textColor: AppStyle.subAccentColor,
       iconColor: AppStyle.subAccentColor,
-      leading: (ic.runtimeType==IconData)?Icon(ic):ic,
+      leading: (ic.runtimeType == IconData) ? Icon(ic) : ic,
       title: Text(FileManager.basename(widget.entity)),
       trailing: fav,
       onTap: () {
