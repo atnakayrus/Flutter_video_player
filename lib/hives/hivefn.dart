@@ -4,20 +4,27 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class DataBase {
   List<FileSystemEntity> folders = [];
-  List<FileSystemEntity> files = [];
+  List folderPaths = [];
   final _mybox = Hive.box('Fave');
 
   void createInitialData() {
     updateData();
+    print('hello');
   }
 
   void loadData() {
-    folders = _mybox.get('folders');
-    files = _mybox.get('files');
+    folderPaths = _mybox.get('folders');
+    print(folderPaths);
+    for (int i = 0; i < folderPaths.length; i++) {
+      folders.add(Directory(folderPaths[i]));
+    }
   }
 
   void updateData() {
-    _mybox.put('folders', folders);
-    _mybox.put('files', files);
+    folderPaths = [];
+    for (int i = 0; i < folders.length; i++) {
+      folderPaths.add(folders[i].path);
+    }
+    _mybox.put('folders', folderPaths);
   }
 }

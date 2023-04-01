@@ -43,17 +43,19 @@ class _FileTileState extends State<FileTile> {
       icon: Icon(check ? Icons.favorite : Icons.favorite_border,
           color: AppStyle.subAccentColor),
       onPressed: () {
+        // print(check);
         if (check) {
-          widget.db.folders.remove(widget.entity);
+          widget.db.folders = df.removeEle(widget.entity, widget.db.folders);
         } else {
-          widget.db.folders.add(widget.entity);
+          widget.db.folders = df.addEle(widget.entity, widget.db.folders);
         }
         setState(() {
           check = !check;
         });
-        print(widget.db.folders);
-        print(widget.entity);
-        print(check);
+        // print(widget.db.folders);
+        // print(widget.entity);
+        // print(check);
+        widget.db.updateData();
       },
     );
 

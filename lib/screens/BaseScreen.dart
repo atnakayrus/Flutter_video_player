@@ -26,7 +26,7 @@ class _BaseScreenState extends State<BaseScreen> {
   DataBase db = DataBase();
   @override
   void initState() {
-    if (_myBox.get('Fave') == null) {
+    if (_myBox.get('folders') == null) {
       db.createInitialData();
     } else {
       db.loadData();
