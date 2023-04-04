@@ -18,19 +18,15 @@ class FileScreen extends StatefulWidget {
 
 class _FileScreenState extends State<FileScreen> {
   FileManagerController controller = FileManagerController();
-  var status=false;
+  var status = false;
   Future<void> getPerm() async {
     status = await Permission.storage.request().isGranted;
   }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getPerm();
-  }
+
   @override
   void initState() {
     controller.setCurrentPath = widget.path;
+    getPerm();
     super.initState();
   }
 
@@ -63,13 +59,11 @@ class _FileScreenState extends State<FileScreen> {
             return ListView.builder(
               itemCount: entities.length,
               itemBuilder: (context, index) {
-
-                if(status==true) {
+                if (status == true) {
                   return FileTile(
                       entity: entities[index],
                       controller: controller,
-                      db: widget.db
-                  );
+                      db: widget.db);
                 }
                 return null;
               },
