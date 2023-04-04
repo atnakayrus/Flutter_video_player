@@ -4,12 +4,13 @@ import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/hives/hivefn.dart';
+import 'package:flutter_video_player/screens/FileScreen.dart';
 import 'package:flutter_video_player/widgets/filetile.dart';
 
 class FavScreen extends StatefulWidget {
   final DataBase db;
-  const FavScreen({super.key, required this.db});
-
+  final Function onTap;
+  const FavScreen({super.key, required this.db, required this.onTap});
   @override
   State<FavScreen> createState() => _FavScreenState();
 }
@@ -19,6 +20,7 @@ class _FavScreenState extends State<FavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int len = widget.db.folders.length;
     return Scaffold(
       appBar: AppBar(
         title: Text('hello'),
@@ -28,21 +30,29 @@ class _FavScreenState extends State<FavScreen> {
       drawer: Drawer(backgroundColor: AppStyle.mainColor),
       body: Container(
         color: AppStyle.accentColor,
-        child: FileManager(
-          controller: controller,
-          builder: (context, snapshot) {
-            final List<FileSystemEntity> entities = snapshot;
-            return ListView.builder(
-              itemCount: widget.db.folders.length,
-              itemBuilder: (context, index) {
-                return FileTile(
-                    entity: widget.db.folders[index],
-                    controller: controller,
-                    db: widget.db);
-              },
-            );
-          },
-        ),
+        child: ListView.builder(
+            itemCount: len,
+            itemBuilder: (context, index) {
+              FileSystemEntity entity = File(widget.db.folders[index].path);
+              return ListTile(
+                textColor: AppStyle.subAccentColor,
+                iconColor: AppStyle.subAccentColor,
+                title: Text(FileManager.basename(entity)),
+                onTap: () async {
+                  bool reload = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FileScreen(
+                              db: widget.db,
+                              path: widget.db.folders[index].path,
+                            )),
+                  );
+                  if (reload) {
+                    setState(() {});
+                  }
+                },
+              );
+            }),
       ),
     );
   }

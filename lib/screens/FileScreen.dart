@@ -8,7 +8,8 @@ import 'package:flutter_video_player/widgets/filetile.dart';
 
 class FileScreen extends StatefulWidget {
   final DataBase db;
-  const FileScreen({super.key, required this.db});
+  final String path;
+  const FileScreen({super.key, required this.db, required this.path});
 
   @override
   State<FileScreen> createState() => _FileScreenState();
@@ -17,6 +18,12 @@ class FileScreen extends StatefulWidget {
 class _FileScreenState extends State<FileScreen> {
   FileManagerController controller = FileManagerController();
   @override
+  void initState() {
+    controller.setCurrentPath = widget.path;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,9 +31,14 @@ class _FileScreenState extends State<FileScreen> {
         foregroundColor: AppStyle.subMainColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (controller.isRootDirectory() != true) {
+          onPressed: () async {
+            if (await controller.isRootDirectory() != true) {
               controller.goToParentDirectory();
+            } else {
+              print('should pop');
+              if (Navigator.canPop(context) == true) {
+                Navigator.pop(context, true);
+              }
             }
           },
         ),
