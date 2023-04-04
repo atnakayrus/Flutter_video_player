@@ -1,11 +1,14 @@
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/hives/datafn.dart';
 import 'package:flutter_video_player/hives/hivefn.dart';
+import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class FileTile extends StatefulWidget {
   final FileSystemEntity entity;
@@ -22,6 +25,16 @@ class FileTile extends StatefulWidget {
 }
 
 class _FileTileState extends State<FileTile> {
+  late VideoPlayerController vid_cont;
+  Future<Uint8List?> get_video_thumbnail(String path) async {
+    final res=await VideoThumbnail.thumbnailData(
+      video: path,
+      imageFormat: ImageFormat.JPEG,
+      maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+      quality: 25,
+    );
+    return res;
+  }
   @override
   Widget build(BuildContext context) {
     var ic;
@@ -29,13 +42,12 @@ class _FileTileState extends State<FileTile> {
       ic = Icons.folder;
     } else {
       String ext = FileManager.getFileExtension(widget.entity);
+      String path = widget.entity.path;
+      File f = File(path);
       if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-        String path = widget.entity.path;
-        print(path);
-        File f = File(path);
         ic = Container(padding: EdgeInsets.all(10), child: Image.file(f));
       } else if (ext == "mp4") {
-        ic = Icons.video_collection;
+        ic = get_video_thumbnail(path);
       } else {
         ic = Icons.feed_outlined;
       }
