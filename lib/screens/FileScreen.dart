@@ -5,6 +5,7 @@ import "package:file_manager/file_manager.dart";
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/hives/hivefn.dart';
 import 'package:flutter_video_player/widgets/filetile.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class FileScreen extends StatefulWidget {
   final DataBase db;
@@ -16,6 +17,16 @@ class FileScreen extends StatefulWidget {
 
 class _FileScreenState extends State<FileScreen> {
   FileManagerController controller = FileManagerController();
+  var status=false;
+  Future<void> getPerm() async {
+    status = await Permission.storage.request().isGranted;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPerm();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,10 +51,15 @@ class _FileScreenState extends State<FileScreen> {
             return ListView.builder(
               itemCount: entities.length,
               itemBuilder: (context, index) {
-                return FileTile(
-                    entity: entities[index],
-                    controller: controller,
-                    db: widget.db);
+
+                if(status==true) {
+                  return FileTile(
+                      entity: entities[index],
+                      controller: controller,
+                      db: widget.db
+                  );
+                }
+                return null;
               },
             );
           },
