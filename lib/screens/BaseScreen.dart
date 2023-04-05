@@ -16,10 +16,16 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 0;
+  String basePath = '';
   void selectedItem(int index) {
     setState(() {
       _selectedIndex = index;
+      basePath = '';
     });
+  }
+
+  void navigateToFile(String path) {
+    basePath = path;
   }
 
   final _myBox = Hive.box('Fave');
@@ -36,12 +42,16 @@ class _BaseScreenState extends State<BaseScreen> {
 
   Widget currentScreen() {
     if (_selectedIndex == 1) {
-      return FileScreen(db: db);
+      return FileScreen(
+        db: db,
+        path: '',
+      );
     } else if (_selectedIndex == 2) {
       return WebScreen();
     }
     return FavScreen(
       db: db,
+      onTap: navigateToFile,
     );
   }
 

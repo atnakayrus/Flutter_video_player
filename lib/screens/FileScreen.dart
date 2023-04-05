@@ -9,7 +9,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 class FileScreen extends StatefulWidget {
   final DataBase db;
-  const FileScreen({super.key, required this.db});
+  final String path;
+  const FileScreen({super.key, required this.db, required this.path});
 
   @override
   State<FileScreen> createState() => _FileScreenState();
@@ -17,16 +18,18 @@ class FileScreen extends StatefulWidget {
 
 class _FileScreenState extends State<FileScreen> {
   FileManagerController controller = FileManagerController();
-  var status=false;
+  var status = false;
   Future<void> getPerm() async {
     status = await Permission.storage.request().isGranted;
   }
+
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
+    controller.setCurrentPath = widget.path;
     getPerm();
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +38,14 @@ class _FileScreenState extends State<FileScreen> {
         foregroundColor: AppStyle.subMainColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (controller.isRootDirectory() != true) {
+          onPressed: () async {
+            if (await controller.isRootDirectory() != true) {
               controller.goToParentDirectory();
+            } else {
+              print('should pop');
+              if (Navigator.canPop(context) == true) {
+                Navigator.pop(context, true);
+              }
             }
           },
         ),
@@ -51,13 +59,11 @@ class _FileScreenState extends State<FileScreen> {
             return ListView.builder(
               itemCount: entities.length,
               itemBuilder: (context, index) {
-
-                if(status==true) {
+                if (status == true) {
                   return FileTile(
                       entity: entities[index],
                       controller: controller,
-                      db: widget.db
-                  );
+                      db: widget.db);
                 }
                 return null;
               },
