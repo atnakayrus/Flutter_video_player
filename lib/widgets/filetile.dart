@@ -26,14 +26,15 @@ class FileTile extends StatefulWidget {
 
 class _FileTileState extends State<FileTile> {
   late VideoPlayerController vid_cont;
-  Future<Uint8List?> get_video_thumbnail(String path) async {
-    final res=await VideoThumbnail.thumbnailData(
+  var res;
+  String? thumbnailFile;
+  Future<void> get_video_thumbnail(String path) async {
+     res=await VideoThumbnail.thumbnailData(
       video: path,
       imageFormat: ImageFormat.JPEG,
       maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
       quality: 25,
     );
-    return res;
   }
   @override
   Widget build(BuildContext context) {
@@ -47,8 +48,15 @@ class _FileTileState extends State<FileTile> {
       if (ext == "png" || ext == "jpg" || ext == "jpeg") {
         ic = Container(padding: EdgeInsets.all(10), child: Image.file(f));
       } else if (ext == "mp4") {
-        ic = get_video_thumbnail(path);
-      } else {
+        get_video_thumbnail(path);
+        if (res != null) {
+          print("The output");
+          print(res);
+          // File t = File(temp);
+          ic = Container(padding: EdgeInsets.all(10), child: Image.memory(res));
+        }
+      }
+        else {
         ic = Icons.feed_outlined;
       }
     }

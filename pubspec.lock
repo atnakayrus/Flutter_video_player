@@ -93,10 +93,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_manager
-      sha256: d66e05b9f9eedb86ad21bf699e5a18caaf07ae4c1e27e12ff0ee3251db688587
+      sha256: "72c3ec25614ca7a115995db5ca6a7fe84ab3e9b9280e7ab25ab50b9c892f437e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -439,8 +439,4 @@ packages:
     version: "1.0.0"
 sdks:
   dart: ">=2.19.3 <3.0.0"
-<<<<<<< HEAD
-  flutter: ">=3.0.0"
-=======
   flutter: ">=3.3.0"
->>>>>>> main
