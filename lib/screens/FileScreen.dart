@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import "package:file_manager/file_manager.dart";
 import 'package:flutter_video_player/constants/Appstyle.dart';
@@ -51,7 +50,6 @@ class _FileScreenState extends State<FileScreen> {
         ),
       ),
       body: Container(
-        color: AppStyle.accentColor,
         child: FileManager(
           controller: controller,
           builder: (context, snapshot) {
@@ -72,6 +70,5 @@ class _FileScreenState extends State<FileScreen> {
         ),
       ),
     );
-    ;
   }
 }

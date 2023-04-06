@@ -1,7 +1,4 @@
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
@@ -28,7 +25,7 @@ class _FileTileState extends State<FileTile> {
   late VideoPlayerController vid_cont;
   var res;
   var ic;
-  bool loaded=false;
+  bool loaded=false,selected=false;
   String? thumbnailFile;
   Future<void> get_video_thumbnail(String path,Directory dir) async {
      res=await VideoThumbnail.thumbnailFile(
@@ -95,13 +92,25 @@ class _FileTileState extends State<FileTile> {
     return ListTile(
       textColor: AppStyle.subAccentColor,
       iconColor: AppStyle.subAccentColor,
+      tileColor: selected?AppStyle.mainColor:AppStyle.accentColor,
       leading: (ic.runtimeType == IconData) ? Icon(ic) : ic,
       title: Text(FileManager.basename(widget.entity)),
-      trailing: fav,
+      trailing: selected?fav:null,
       onTap: () {
         if (FileManager.isDirectory(widget.entity)) {
           widget.controller.openDirectory(widget.entity);
         }
+        else {
+          String ext = FileManager.getFileExtension(widget.entity);
+          if (ext == "png" || ext == "jpg" || ext == "jpeg") {
+
+          }
+        }
+      },
+      onLongPress: (){
+        setState(() {
+          selected=!selected;
+        });
       },
     );
   }
