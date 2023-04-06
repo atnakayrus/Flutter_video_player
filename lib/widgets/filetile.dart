@@ -27,18 +27,22 @@ class FileTile extends StatefulWidget {
 class _FileTileState extends State<FileTile> {
   late VideoPlayerController vid_cont;
   var res;
+  var ic;
+  bool loaded=false;
   String? thumbnailFile;
-  Future<void> get_video_thumbnail(String path) async {
-     res=await VideoThumbnail.thumbnailData(
+  Future<void> get_video_thumbnail(String path,Directory dir) async {
+     res=await VideoThumbnail.thumbnailFile(
       video: path,
       imageFormat: ImageFormat.JPEG,
+      thumbnailPath: dir.path,
       maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
       quality: 25,
     );
+  setState(() {
+    loaded=true;
+  });
   }
-  @override
-  Widget build(BuildContext context) {
-    var ic;
+  Future<void> getIcon() async {
     if (FileManager.isDirectory(widget.entity)) {
       ic = Icons.folder;
     } else {
@@ -46,20 +50,26 @@ class _FileTileState extends State<FileTile> {
       String path = widget.entity.path;
       File f = File(path);
       if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-        ic = Container(padding: EdgeInsets.all(10), child: Image.file(f));
+        ic = Container(padding: const EdgeInsets.all(10), child: Image.file(f));
       } else if (ext == "mp4") {
-        get_video_thumbnail(path);
+        var temp=Directory.systemTemp;
+        get_video_thumbnail(path,temp);
         if (res != null) {
           print("The output");
           print(res);
-          // File t = File(temp);
-          ic = Container(padding: EdgeInsets.all(10), child: Image.memory(res));
+          File t = File(res);
+          ic = loaded?Container(padding: const EdgeInsets.all(10), child: Image.file(t)):CircularProgressIndicator();
         }
       }
-        else {
+      else {
         ic = Icons.feed_outlined;
       }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getIcon();
     DataFunctions df = DataFunctions();
     bool check = df.isFav(widget.entity, widget.db.folders);
     IconButton fav = IconButton(
