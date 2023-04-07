@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/hives/datafn.dart';
 import 'package:flutter_video_player/hives/hivefn.dart';
+import 'package:flutter_video_player/screens/DisplayScreen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -55,7 +56,7 @@ class _FileTileState extends State<FileTile> {
           print("The output");
           print(res);
           File t = File(res);
-          ic = loaded?Container(padding: const EdgeInsets.all(10), child: Image.file(t)):CircularProgressIndicator();
+          ic = loaded?Container(padding: const EdgeInsets.all(10), child: Image.file(t)):const CircularProgressIndicator();
         }
       }
       else {
@@ -101,10 +102,10 @@ class _FileTileState extends State<FileTile> {
           widget.controller.openDirectory(widget.entity);
         }
         else {
-          String ext = FileManager.getFileExtension(widget.entity);
-          if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-
-          }
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  DisplayScreen(entity: widget.entity)),
+            );
         }
       },
       onLongPress: (){
