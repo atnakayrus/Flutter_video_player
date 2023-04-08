@@ -1,6 +1,6 @@
 import "dart:io";
-
 import "package:flutter/material.dart";
+import "package:flutter_video_player/widgets/OverlayWidget.dart";
 import "package:video_player/video_player.dart";
 class VidWidget extends StatefulWidget {
   final FileSystemEntity entity;
@@ -30,15 +30,26 @@ class _VidWidgetState extends State<VidWidget> {
   }
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
   return Container(
     child: _controller.value.isInitialized?
-        Center(child: VideoPlayer(_controller),)
+        Center(
+          child:Stack(
+              children: [
+                Container(
+                child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller)
+                )
+            ),
+            Positioned.fill(child:OverlayWidget(controller: _controller))
+          ],
+        )
+        )
         :
-    const Center(
-      child: SizedBox(
-        height: 200,
-        child: CircularProgressIndicator(),
-      ),
+     const Center(
+      child: CircularProgressIndicator(),
     ),
   );
 }
