@@ -18,7 +18,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       child: Stack(
         children: [
           widget.controller.value.isPlaying?
-                Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:30),):
+          Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:30),):
           Container(alignment:Alignment.center,child: Icon(Icons.play_arrow,color: Colors.white,size: 30,),),
           Positioned(
             bottom: 0,

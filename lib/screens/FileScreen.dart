@@ -48,8 +48,10 @@ class _FileScreenState extends State<FileScreen> {
             }
           },
         ),
+
       ),
       body: Container(
+        color: AppStyle.accentColor,
         child: FileManager(
           controller: controller,
           builder: (context, snapshot) {

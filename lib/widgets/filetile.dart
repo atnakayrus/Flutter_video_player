@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/hives/datafn.dart';
 import 'package:flutter_video_player/hives/hivefn.dart';
@@ -93,10 +94,9 @@ class _FileTileState extends State<FileTile> {
     return ListTile(
       textColor: AppStyle.subAccentColor,
       iconColor: AppStyle.subAccentColor,
-      tileColor: selected?AppStyle.mainColor:AppStyle.accentColor,
+      tileColor: AppStyle.accentColor,
       leading: (ic.runtimeType == IconData) ? Icon(ic) : ic,
       title: Text(FileManager.basename(widget.entity)),
-      trailing: selected?fav:null,
       onTap: () {
         if (FileManager.isDirectory(widget.entity)) {
           widget.controller.openDirectory(widget.entity);
@@ -108,11 +108,7 @@ class _FileTileState extends State<FileTile> {
             );
         }
       },
-      onLongPress: (){
-        setState(() {
-          selected=!selected;
-        });
-      },
+
     );
   }
 }
