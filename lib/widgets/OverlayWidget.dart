@@ -9,8 +9,20 @@ class OverlayWidget extends StatefulWidget {
 }
 
 class _OverlayWidgetState extends State<OverlayWidget> {
+  Widget dir(var symbol){
+    return GestureDetector(
+      child: Icon(symbol,color: Colors.white,size:30),
+      onTap: () {
+        Duration current=widget.controller.value.position;
+        Duration target=(symbol==Icons.fast_rewind)?current-Duration(seconds: 10):current+Duration(seconds: 10);
+        widget.controller.seekTo(target);
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: (){
         widget.controller.value.isPlaying?widget.controller.pause():widget.controller.play();
@@ -18,13 +30,25 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       child: Stack(
         children: [
           widget.controller.value.isPlaying?
-          Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:30),):
-          Container(alignment:Alignment.center,child: Icon(Icons.play_arrow,color: Colors.white,size: 30,),),
+          Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:50),):
+          Container(alignment:Alignment.center,child: Icon(Icons.play_arrow,color: Colors.white,size: 50,),),
           Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: VideoProgressIndicator(widget.controller, allowScrubbing: true))
+            bottom: 40,
+            left: 10,
+            right: 10,
+            child:VideoProgressIndicator(widget.controller,allowScrubbing: true,)
+          ),
+          Positioned(
+            left: 50,
+            bottom: 5,
+            child: dir(Icons.fast_forward)
+          ),
+          Positioned(
+              left: 10,
+              bottom: 5,
+              child: dir(Icons.fast_rewind)
+          ),
+
         ],
       ),
     );

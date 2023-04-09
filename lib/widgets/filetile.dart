@@ -96,6 +96,7 @@ class _FileTileState extends State<FileTile> {
       iconColor: AppStyle.subAccentColor,
       tileColor: AppStyle.accentColor,
       leading: (ic.runtimeType == IconData) ? Icon(ic) : ic,
+      trailing: fav,
       title: Text(FileManager.basename(widget.entity)),
       onTap: () {
         if (FileManager.isDirectory(widget.entity)) {

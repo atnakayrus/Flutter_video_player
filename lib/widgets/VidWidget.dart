@@ -34,18 +34,28 @@ class _VidWidgetState extends State<VidWidget> {
     double width=MediaQuery.of(context).size.width;
   return Container(
     child: _controller.value.isInitialized?
-        Center(
-          child:Stack(
-              children: [
-                Container(
-                child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller)
-                )
-            ),
-            Positioned.fill(child:OverlayWidget(controller: _controller))
-          ],
-        )
+        Stack(
+            children: [
+              Positioned(
+                top: 20,
+                left: 0,
+                right: 0,
+                child: GestureDetector(
+                  child: Icon(Icons.arrow_back,color: Colors.white,),
+                  onTap: (){
+                    Navigator.pop(context);
+                    },
+                ),
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller)
+              )
+          ),
+          Positioned.fill(child:OverlayWidget(controller: _controller))
+        ],
         )
         :
      const Center(
