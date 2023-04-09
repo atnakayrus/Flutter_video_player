@@ -31,44 +31,54 @@ class _FileScreenState extends State<FileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppStyle.mainColor,
-        foregroundColor: AppStyle.subMainColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () async {
-            if (await controller.isRootDirectory() != true) {
-              controller.goToParentDirectory();
-            } else {
-              print('should pop');
-              if (Navigator.canPop(context) == true) {
-                Navigator.pop(context, true);
-              }
-            }
-          },
-        ),
-
-      ),
-      body: Container(
-        color: AppStyle.accentColor,
-        child: FileManager(
-          controller: controller,
-          builder: (context, snapshot) {
-            final List<FileSystemEntity> entities = snapshot;
-            return ListView.builder(
-              itemCount: entities.length,
-              itemBuilder: (context, index) {
-                if (status == true) {
-                  return FileTile(
-                      entity: entities[index],
-                      controller: controller,
-                      db: widget.db);
+    return WillPopScope(
+      onWillPop: () async{
+        if (await controller.isRootDirectory() != true) {
+          controller.goToParentDirectory();
+          return false;
+        }
+        else{
+          return false;
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppStyle.mainColor,
+          foregroundColor: AppStyle.subMainColor,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              if (await controller.isRootDirectory() != true) {
+                controller.goToParentDirectory();
+              } else {
+                print('should pop');
+                if (Navigator.canPop(context) == true) {
+                  Navigator.pop(context, true);
                 }
-                return null;
-              },
-            );
-          },
+              }
+            },
+          ),
+        ),
+        body: Container(
+          color: AppStyle.accentColor,
+          child: FileManager(
+            controller: controller,
+            builder: (context, snapshot) {
+              final List<FileSystemEntity> entities = snapshot;
+              return ListView.builder(
+                itemCount: entities.length,
+                itemBuilder: (context, index) {
+                  if (status == true) {
+                    return FileTile(
+                        entity: entities[index],
+                        controller: controller,
+                        db: widget.db);
+                  }
+                  return null;
+                },
+              );
+            },
+          ),
         ),
       ),
     );
