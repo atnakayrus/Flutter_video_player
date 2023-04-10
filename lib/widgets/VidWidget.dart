@@ -10,8 +10,9 @@ class VidWidget extends StatefulWidget {
   State<VidWidget> createState() => _VidWidgetState();
 }
 
-class _VidWidgetState extends State<VidWidget> {
+class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMixin{
   late VideoPlayerController _controller;
+  bool active=true;
   @override
   void initState() {
     // TODO: implement initState
@@ -21,6 +22,7 @@ class _VidWidgetState extends State<VidWidget> {
     }))
       ..setLooping(true)
       ..initialize().then((_) => _controller.play());
+
   }
   @override
   void dispose() {
@@ -32,35 +34,43 @@ class _VidWidgetState extends State<VidWidget> {
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
-  return Container(
-    child: _controller.value.isInitialized?
-        Stack(
-            children: [
-              // Positioned(
-              //   top: 20,
-              //   left: 0,
-              //   right: 0,
-              //   child: GestureDetector(
-              //     child: Icon(Icons.arrow_back,color: Colors.white,),
-              //     onTap: (){
-              //       Navigator.pop(context);
-              //       },
-              //   ),
-              // ),
-              Container(
-                  alignment: Alignment.center,
-                  child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller)
-              )
-          ),
-          Positioned.fill(child:OverlayWidget(controller: _controller))
-        ],
-        )
-        :
-     const Center(
-      child: CircularProgressIndicator(),
+  return WillPopScope(
+    onWillPop: ()async{
+      return true;
+    },
+    child: GestureDetector(
+      onTap: (){
+        setState(() {
+          active=!active;
+        });
+        },
+      child: Container(
+        child: _controller.value.isInitialized?
+            Stack(
+                children: [
+                  Container(
+                      alignment: Alignment.center,
+                      child: AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller)
+                  )
+              ),
+              fading_widget()
+            ],
+            )
+            :
+         const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
     ),
   );
 }
+
+  fading_widget() {
+    return AnimatedOpacity(
+        opacity: active?1.0:0.0,
+        duration: Duration(milliseconds: 100),
+        child: OverlayWidget(controller: _controller));
+  }
 }

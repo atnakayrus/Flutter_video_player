@@ -9,6 +9,7 @@ class OverlayWidget extends StatefulWidget {
 }
 
 class _OverlayWidgetState extends State<OverlayWidget> {
+
   Widget dir(var symbol){
     return GestureDetector(
       child: Icon(symbol,color: Colors.white,size:30),
@@ -19,6 +20,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
@@ -26,6 +28,9 @@ class _OverlayWidgetState extends State<OverlayWidget> {
     int duration = widget.controller.value.duration.inMilliseconds;
     int position = widget.controller.value.position.inMilliseconds;
     double ratio=position/duration;
+    dynamic controls(var ic){
+      return Container(alignment:Alignment.center,child: Icon(ic,color: Colors.white,size:50),);
+    }
     return GestureDetector(
       onTap: (){
         widget.controller.value.isPlaying?widget.controller.pause():widget.controller.play();
@@ -33,8 +38,8 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       child: Stack(
         children: [
           widget.controller.value.isPlaying?
-          Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:50),):
-          Container(alignment:Alignment.center,child: Icon(Icons.play_arrow,color: Colors.white,size: 50,),),
+          controls(Icons.pause):
+          controls(Icons.play_arrow),
 
           Positioned(
             bottom: 40,

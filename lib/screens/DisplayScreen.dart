@@ -21,10 +21,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
       return Image.file(File(widget.entity.path));
     }
     else if(ext=="mp4"){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>  VidWidget(entity: widget.entity,)),
-      );
+      return VidWidget(entity: widget.entity,);
 
     }
   }
