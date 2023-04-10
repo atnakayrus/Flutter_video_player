@@ -36,17 +36,17 @@ class _VidWidgetState extends State<VidWidget> {
     child: _controller.value.isInitialized?
         Stack(
             children: [
-              Positioned(
-                top: 20,
-                left: 0,
-                right: 0,
-                child: GestureDetector(
-                  child: Icon(Icons.arrow_back,color: Colors.white,),
-                  onTap: (){
-                    Navigator.pop(context);
-                    },
-                ),
-              ),
+              // Positioned(
+              //   top: 20,
+              //   left: 0,
+              //   right: 0,
+              //   child: GestureDetector(
+              //     child: Icon(Icons.arrow_back,color: Colors.white,),
+              //     onTap: (){
+              //       Navigator.pop(context);
+              //       },
+              //   ),
+              // ),
               Container(
                   alignment: Alignment.center,
                   child: AspectRatio(

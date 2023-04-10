@@ -23,6 +23,9 @@ class _OverlayWidgetState extends State<OverlayWidget> {
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
+    int duration = widget.controller.value.duration.inMilliseconds;
+    int position = widget.controller.value.position.inMilliseconds;
+    double ratio=position/duration;
     return GestureDetector(
       onTap: (){
         widget.controller.value.isPlaying?widget.controller.pause():widget.controller.play();
@@ -32,11 +35,17 @@ class _OverlayWidgetState extends State<OverlayWidget> {
           widget.controller.value.isPlaying?
           Container(alignment:Alignment.center,child: Icon(Icons.pause,color: Colors.white,size:50),):
           Container(alignment:Alignment.center,child: Icon(Icons.play_arrow,color: Colors.white,size: 50,),),
+
           Positioned(
             bottom: 40,
             left: 10,
             right: 10,
             child:VideoProgressIndicator(widget.controller,allowScrubbing: true,)
+          ),
+          Positioned(
+              left: (width*ratio)-10,
+              bottom: 32,
+              child:IgnorePointer(child: Icon(Icons.circle,color: Color.fromRGBO(255, 0, 0, 0.9),size: 20,))
           ),
           Positioned(
             left: 50,
