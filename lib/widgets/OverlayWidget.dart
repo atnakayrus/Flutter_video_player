@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:video_player/video_player.dart";
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import "package:volume_controller/volume_controller.dart";
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 class OverlayWidget extends StatefulWidget {
   final VideoPlayerController controller;
   const OverlayWidget({Key? key, required this.controller}) : super(key: key);
@@ -11,7 +12,7 @@ class OverlayWidget extends StatefulWidget {
 
 class _OverlayWidgetState extends State<OverlayWidget> {
 VolumeController vol=VolumeController();
-var volume;
+var volume;double _value=0.0;
   Future<void> volume1() async {
     setState(() {
       volume= vol.getVolume();
@@ -40,23 +41,21 @@ var volume;
       return Container(alignment:Alignment.center,child: Icon(ic,color: Colors.white,size:50),);
     }
 
-    volume_control(){
-      volume1();
-      return Stack(
-        children:[
-          Container(
-            alignment: Alignment.centerLeft,
-            child: FAProgressBar(
-              direction: Axis.vertical,
-              currentValue: volume*100,
-              size: 30,
-              changeProgressColor: Colors.white,
-              verticalDirection: VerticalDirection.up,
-              animatedDuration: const Duration(milliseconds: 400),
-            ),
-          ),
-          // Icon(Icons.volume_up,size: 30,color: Colors.white,),
-        ] ,
+    dynamic volume_control(){
+      return SfSlider.vertical(
+        min: 0.0,
+        max: 100.0,
+        value: _value,
+        interval: 20,
+        showTicks: true,
+        showLabels: true,
+        minorTicksPerInterval: 1,
+        onChanged: (dynamic value){
+          volume1();
+          setState(() {
+            _value = volume;
+          });
+        },
       );
     }
     return GestureDetector(
@@ -65,10 +64,7 @@ var volume;
       },
       child: Stack(
         children: [
-          widget.controller.value.isPlaying?
-          controls(Icons.pause):
-          controls(Icons.play_arrow),
-          volume_control(),
+          widget.controller.value.isPlaying?controls(Icons.pause):controls(Icons.play_arrow),
           Positioned(
             bottom: 40,
             left: 10,
@@ -90,6 +86,24 @@ var volume;
               bottom: 5,
               child: dir(Icons.fast_rewind)
           ),
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child:Container(
+              alignment: Alignment.centerLeft,
+          child:volume_control() ,
+          )
+          ),
+          // Positioned(
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     color: Colors.white,
+          //     height: 100,
+          //     width: 100,
+          //   ),
+          // )
+
         ],
       ),
     );
