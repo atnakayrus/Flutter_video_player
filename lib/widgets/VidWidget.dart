@@ -23,6 +23,7 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
       ..setLooping(true)
       ..initialize().then((_) => _controller.play());
 
+
   }
   @override
   void dispose() {
@@ -55,7 +56,7 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
                       child: VideoPlayer(_controller)
                   )
               ),
-              fading_widget()
+                  fading_widget(),
             ],
             )
             :
@@ -68,9 +69,13 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
 }
 
   fading_widget() {
+    // Future.delayed(Duration(seconds: 5), (){
+    //   active=true;
+    // });
     return AnimatedOpacity(
-        opacity: active?1.0:0.0,
+        opacity: active?0.0:1.0,
         duration: Duration(milliseconds: 100),
         child: OverlayWidget(controller: _controller));
   }
+
 }

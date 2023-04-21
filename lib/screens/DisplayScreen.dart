@@ -4,7 +4,6 @@ import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_player/constants/Appstyle.dart';
 import 'package:flutter_video_player/widgets/VidWidget.dart';
-import 'package:video_player/video_player.dart';
 
 class DisplayScreen extends StatefulWidget {
   final FileSystemEntity entity;
