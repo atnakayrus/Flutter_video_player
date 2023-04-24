@@ -2,6 +2,8 @@ import "dart:io";
 import "package:flutter/material.dart";
 import "package:flutter_video_player/widgets/OverlayWidget.dart";
 import "package:video_player/video_player.dart";
+import 'package:flutter/services.dart';
+
 class VidWidget extends StatefulWidget {
   final FileSystemEntity entity;
   const VidWidget({Key? key, required this.entity}) : super(key: key);
@@ -20,7 +22,7 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
     _controller=VideoPlayerController.file(File(widget.entity.path))
       ..addListener(() =>setState(() {
     }))
-      ..setLooping(true)
+      ..setLooping(false)
       ..initialize().then((_) => _controller.play());
 
 
@@ -49,13 +51,14 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
         child: _controller.value.isInitialized?
             Stack(
                 children: [
-                  Container(
-                      alignment: Alignment.center,
-                      child: AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller)
-                  )
+                  Center(
+                    child: Container(
+                        child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller)
+                    )
               ),
+                  ),
                   fading_widget(),
             ],
             )
@@ -72,6 +75,7 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
     // Future.delayed(Duration(seconds: 5), (){
     //   active=true;
     // });
+    active?SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive):SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return AnimatedOpacity(
         opacity: active?0.0:1.0,
         duration: Duration(milliseconds: 100),
