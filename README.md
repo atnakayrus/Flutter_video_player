@@ -2,7 +2,7 @@
 <img src='ezalternatives.jpg'>
 <br>
 <br>
-<h2>EZAlternatives is a set of android applications under the idea that basic apps should be absolutely free to use , without anything underneath , like stealing data or advertisements</h2>
+<h2><a href='https://github.com/atnakayrus/EZAlternatives'>EZAlternatives</a> is a set of android applications under the idea that basic apps should be absolutely free to use , without anything underneath , like stealing data or advertisements</h2>
 <br>
 <h3>Alt Videos is still in production phase, and we expect it to be release ready by june 2023</h3>
 <br>
