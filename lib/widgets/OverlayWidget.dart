@@ -141,16 +141,7 @@ int maxVol=0, currentVol=0;
           child:volume_control() ,
           )
           ),
-          // Positioned(
-          //   child: Container(
-          //     alignment: Alignment.center,
-          //     color: Colors.white,
-          //     height: 100,
-          //     width: 100,
-          //   ),
-          // )
-
-        ],
+          ],
       ),
     );
   }

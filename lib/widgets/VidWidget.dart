@@ -56,7 +56,7 @@ class _VidWidgetState extends State<VidWidget> with SingleTickerProviderStateMix
                         child: AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
                         child: VideoPlayer(_controller)
-                    )
+                    ),
               ),
                   ),
                   fading_widget(),
